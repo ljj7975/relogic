@@ -1,5 +1,7 @@
 from relogic.logickit.inference.modeling import BertPreTrainedModel, BertModel
 from relogic.logickit.inference.modeling_xlm import XLMPreTrainedModel, XLMModel
+from fairseq.models.roberta import XLMRModel
+import os
 import torch
 import torch.nn as nn
 
@@ -14,7 +16,9 @@ def get_encoder(encoder_type):
 class XLMRobertaEncoder(nn.Module):
   def __init__(self, pretrained_model_name_or_path):
     super().__init__()
-    self.xlmr = torch.hub.load('pytorch/fairseq', pretrained_model_name_or_path)
+    print("loading model from local :", os.path.join(os.getenv("TRAINED_MODEL_DIR"), pretrained_model_name_or_path))
+    self.xlmr = XLMRModel.from_pretrained(os.path.join(os.getenv("TRAINED_MODEL_DIR"), pretrained_model_name_or_path), checkpoint_file='model.pt')
+    #self.xlmr = torch.hub.load('pytorch/fairseq', pretrained_model_name_or_path)
 
   def forward(self, input_ids, **kwargs):
     sequence_output = self.xlmr.extract_features(input_ids)

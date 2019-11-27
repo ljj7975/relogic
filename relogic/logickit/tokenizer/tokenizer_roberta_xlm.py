@@ -1,12 +1,16 @@
 import torch
 import relogic.utils.crash_on_ipy
+import os
+from fairseq.models.roberta import XLMRModel
 
 def clean(text):
   return text.strip()
 
 class RobertaXLMTokenizer:
   def __init__(self, model):
-    self.roberta = torch.hub.load('pytorch/fairseq', model)
+    print("loading model for tokenizer :", os.path.join(os.getenv("TRAINED_MODEL_DIR"), model))
+    self.roberta = XLMRModel.from_pretrained(os.path.join(os.getenv("TRAINED_MODEL_DIR"), model), checkpoint_file='model.pt')
+    #self.roberta = torch.hub.load('pytorch/fairseq', model)
 
   @classmethod
   def from_pretrained(cls, pretrained_model_name_or_path):
