@@ -158,6 +158,14 @@ class Model(BaseModel):
           else:
             print("Skip {}".format(n))
 
+      optimizers["bert_optimizer"] = BertAdam(bert_optimizer_grouped_parameters,
+                                    lr=config.learning_rate,
+                                    warmup=config.warmup_proportion,
+                                    schedule=config.schedule_method,
+                                    t_total=config.num_train_optimization_steps)
+
+      optim_type = "normal"
+
     else:
       utils.log("Optimizing the model using one optimizer")
       bert_optimizer_grouped_parameters = [
