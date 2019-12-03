@@ -1,5 +1,4 @@
 date
-
 CUDA_VISIBLE_DEVICES=1
 output_dir=saves/ner/conll2006/pos/es/test
 
@@ -14,7 +13,7 @@ python -u -m relogic.main \
 --raw_data_path ${DATA_DIR}/CONLL_POS/de/ \
 --label_mapping_path data/preprocessed_data/conll0607_pos_label_mapping.json \
 --model_name default \
---no_cuda \
+--local_rank 0 \
 --learning_rate 1e-5 \
 --train_batch_size 6 \
 --test_batch_size 6 \
