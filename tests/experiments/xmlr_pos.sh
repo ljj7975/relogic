@@ -6,9 +6,9 @@ mkdir -p output_dir
 python -u -m relogic.main \
 --task_name pos \
 --mode train \
+--encoder_type xlmr \
+--bert_model xlmr.large.v0 \
 --output_dir ${output_dir} \
---encoder_type bert \
---bert_model bert-base-multilingual-cased  \
 --raw_data_path ${DATA_DIR}/CONLL_POS/el/ \
 --label_mapping_path data/preprocessed_data/conll0607_pos_label_mapping.json \
 --model_name default \
@@ -21,7 +21,7 @@ python -u -m relogic.main \
 --pretokenized \
 --metrics accuracy \
 --early_stop_at 5 \
---config_file configurations/mbert_config.json
+--config_file configurations/xlmr_large_config.json
 
 python -u -m relogic.main \
 --mode eval \
@@ -29,3 +29,4 @@ python -u -m relogic.main \
 --no_cuda
 
 rm -r ${output_dir}
+
